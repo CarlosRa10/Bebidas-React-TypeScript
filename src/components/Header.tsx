@@ -5,7 +5,7 @@ export default function Header() {
 
     const {pathname} = useLocation()//destructuring para obtener pathname de lo que retorna useLocation
     //console.log(pathname)
-    const isHome = useMemo(()=>pathname ==='/',[pathname])
+    const isHome = useMemo(()=>pathname ==='/',[pathname])//useMemo para que no se ejecute cada vez que se renderiza el componente, solo cuando pathname cambia
     //console.log(isHome)
 
 
