@@ -3,6 +3,7 @@ import IndexPage from './views/IndexPage'
 import FavoritesPage from './views/FavoritesPage'
 import Layout from './layouts/Layout'
 
+// aqui es donde se definen las rutas de la aplicacion
 export default function AppRouter() {
   return (
     <BrowserRouter>
