@@ -2,6 +2,7 @@ import {Outlet} from 'react-router-dom'// Outlet es para renderizar el contenido
 import Header from '../components/Header'
 export default function Layout() {
   //pagina principal, layout, contenedor de las rutas hijas
+  //en este caso es el header y el main
   return (
     <>
          <Header/>
