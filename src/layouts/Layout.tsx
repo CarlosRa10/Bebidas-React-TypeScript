@@ -3,6 +3,7 @@ import Header from '../components/Header'
 export default function Layout() {
   //pagina principal, layout, contenedor de las rutas hijas
   //en este caso es el header y el main
+  //el main es el contenedor de las rutas hijas
   return (
     <>
          <Header/>
