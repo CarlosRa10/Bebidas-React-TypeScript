@@ -1,10 +1,9 @@
 import type { StateCreator } from "zustand"
 import { getCategories } from "../services/RecipeService"
-
-type Category = {}
+import type { Categories } from "../types"
 
 export type RecipeSliceType = {
-    categories: Category[],
+    categories: Categories,
     fetchCategories: () => Promise<void>
 
 }
@@ -12,11 +11,17 @@ export type RecipeSliceType = {
 //StateCreator<RecipeSliceType>
 //Le dice a TypeScript: "Esta función debe cumplir con la forma de un creador de estado de Zustand"
 //Y que el estado que devuelva debe coincidir con RecipeSliceType
-export const createRecipeSlice : StateCreator<RecipeSliceType> = () => ({
-    categories:[],
+//para escribir en el state de Zustand, se usa set
+export const createRecipeSlice : StateCreator<RecipeSliceType> = (set) => ({
+    categories:{
+        drinks: []
+    },
     fetchCategories: async() => {
         const categories = await getCategories()
-        console.log(categories)
+        //console.log(categories)
+        set({
+            categories
+        })
     }
 
 })
