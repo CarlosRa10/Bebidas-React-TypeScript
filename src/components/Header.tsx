@@ -1,5 +1,6 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import {NavLink, useLocation} from 'react-router-dom'
+import { useAppStore } from '../stores/useAppStore'
 
 export default function Header() {
 
@@ -8,6 +9,19 @@ export default function Header() {
     const isHome = useMemo(()=>pathname ==='/',[pathname])//useMemo para que no se ejecute cada vez que se renderiza el componente, solo cuando pathname cambia
     //console.log(isHome)
 
+//El state representa TODO el estado de tu store Zustand crea el objeto state automáticamente
+// cuando se llama a useAppStore, se obtiene el estado actual del store
+// slice define lo que contiene state
+    const fetchCategories = useAppStore((state)=> state.fetchCategories)
+//"Dame la función fetchCategories que está dentro del cajón state"
+
+    useEffect(() => {
+        fetchCategories()
+    },[])
+//[] → "No vigiles nada, dispara el efecto solo al inicio"
+//[id] → "Vigila id, si cambia, dispara el efecto"
+//(nada) → "Vigila todo, dispara el efecto siempre"
+//[] vacío significa: "Este efecto NO depende de NINGUNA variable"→ Por lo tanto, solo se ejecutará una vez al montar el componente
 
   return (
     <header className={isHome ? 'bg-[url(/bg.jpg)] bg-center bg-cover' : 'bg-slate-800'}>
