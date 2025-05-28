@@ -1,8 +1,13 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState, type ChangeEvent } from 'react'
 import {NavLink, useLocation} from 'react-router-dom'
 import { useAppStore } from '../stores/useAppStore'
 
 export default function Header() {
+
+    const [searchFilters, setSearchFilters] = useState({
+        ingredient: '',
+        category: ''
+    })
 
     const {pathname} = useLocation()//destructuring para obtener pathname de lo que retorna useLocation
     //console.log(pathname)
@@ -25,6 +30,17 @@ export default function Header() {
 //[id] → "Vigila id, si cambia, dispara el efecto"
 //(nada) → "Vigila todo, dispara el efecto siempre"
 //[] vacío significa: "Este efecto NO depende de NINGUNA variable"→ Por lo tanto, solo se ejecutará una vez al montar el componente
+
+
+//función que escribe en el state
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        setSearchFilters({
+            ...searchFilters,
+//e.target.name: Es el nombre de la propiedad que se actualizará en searchFilters
+            [e.target.name]: e.target.value
+//e.target.value: Es el valor que se asignará a dicha propiedad (lo que el usuario escribió o seleccionó).
+        })
+    }
 
   return (
     <header className={isHome ? 'bg-[url(/bg.jpg)] bg-center bg-cover' : 'bg-slate-800'}>
@@ -56,18 +72,22 @@ export default function Header() {
                             name='ingredient'
                             className='p-3 w-full rounded-lg focus:outline-none bg-stone-50'
                             placeholder='Nombre o Ingrediente. Ej. Vodka, Tequila, etc.'
+                            onChange={handleChange}//cuando el valor del elemento html es decir el input cambia, se ejecuta la función handleChange
+                            value={searchFilters.ingredient}
                         />
                     </div>
 
                     <div className='space-y-4'>
-                        <label htmlFor="ingredient"
+                        <label htmlFor="category"
                         className='block text-white font-extrabold uppercase text-lg'
-                        >Categorías</label>
+                        >Categoría</label>
 
                         <select 
-                            id='ingredient'
-                            name='ingredient'
+                            id='category'
+                            name='category'
                             className='p-3 w-full rounded-lg focus:outline-none bg-stone-50'
+                            onChange={handleChange}//cuando el valor del elemento html es decir el input cambia, se ejecuta la función handleChange
+                            value={searchFilters.ingredient}
                         >
                             <option value="">-- Seleccione --</option>
                             {categories.drinks.map(category =>(
