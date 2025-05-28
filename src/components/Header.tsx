@@ -73,7 +73,7 @@ export default function Header() {
                             className='p-3 w-full rounded-lg focus:outline-none bg-stone-50'
                             placeholder='Nombre o Ingrediente. Ej. Vodka, Tequila, etc.'
                             onChange={handleChange}//cuando el valor del elemento html es decir el input cambia, se ejecuta la función handleChange
-                            value={searchFilters.ingredient}
+                            value={searchFilters.ingredient}//Componente Controlado
                         />
                     </div>
 
