@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type ChangeEvent } from 'react'
+import { useEffect, useMemo, useState, type ChangeEvent, type FormEvent } from 'react'
 import {NavLink, useLocation} from 'react-router-dom'
 import { useAppStore } from '../stores/useAppStore'
 
@@ -22,7 +22,11 @@ export default function Header() {
 
     const categories = useAppStore((state)=> state.categories)
     //console.log(categories)
+    
+    
+    const searchRecipes = useAppStore((state)=> state.searchRecipes)
 
+    
     useEffect(() => {
         fetchCategories()
     },[])
@@ -40,6 +44,18 @@ export default function Header() {
             [e.target.name]: e.target.value
 //e.target.value: Es el valor que se asignará a dicha propiedad (lo que el usuario escribió o seleccionó).
         })
+    }
+
+//TODO: Validar que los campos no estén vacíos antes de enviar el formulario
+    const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+        e.preventDefault() //Evita que se recargue la página al enviar el formulario
+        //verifica si alguno de los valores en el objeto searchFilters es una cadena vacía ('').
+        if(Object.values(searchFilters).includes('')) {
+            console.log('Todos los campos son obligatorios')
+            return
+        }
+        //Consultar las recetas
+        searchRecipes(searchFilters)
     }
 
   return (
@@ -60,6 +76,7 @@ export default function Header() {
             {isHome && (
                 <form
                     className='md:w-1/2 2xl:w-1/3 bg-orange-400 my-32 p-10 rounded-lg shadow-lg space-y-6'
+                    onSubmit={handleSubmit}
                 >
                     <div className='space-y-4'>
                         <label htmlFor="ingredient"
@@ -87,7 +104,7 @@ export default function Header() {
                             name='category'
                             className='p-3 w-full rounded-lg focus:outline-none bg-stone-50'
                             onChange={handleChange}//cuando el valor del elemento html es decir el input cambia, se ejecuta la función handleChange
-                            value={searchFilters.ingredient}
+                            value={searchFilters.category}
                         >
                             <option value="">-- Seleccione --</option>
                             {categories.drinks.map(category =>(
