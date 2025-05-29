@@ -1,5 +1,5 @@
 import type { StateCreator } from "zustand"
-import { getCategories } from "../services/RecipeService"
+import { getCategories, getRecipes } from "../services/RecipeService"
 import type { Categories, SearchFilter } from "../types"
 
 export type RecipeSliceType = {
@@ -28,7 +28,8 @@ export const createRecipeSlice : StateCreator<RecipeSliceType> = (set) => ({
         // Aquí iría la lógica para buscar recetas según los filtros
         // Por ejemplo, podrías hacer una llamada a un servicio que busque recetas
         // y luego actualizar el estado con los resultados.
-        console.log("Buscando recetas con los siguientes filtros:", filters);
+        //console.log("Buscando recetas con los siguientes filtros:", filters);
+        await getRecipes(filters)
     }
 
 })
