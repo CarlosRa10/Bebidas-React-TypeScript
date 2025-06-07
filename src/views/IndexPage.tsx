@@ -1,5 +1,6 @@
 import { useMemo } from "react"
 import { useAppStore } from "../stores/useAppStore"
+import DrinkCard from "../components/DrinkCard"
 
 
 export default function IndexPage() {
@@ -11,7 +12,12 @@ export default function IndexPage() {
       <h1 className="text-6xl font-extrabold ">Recetas</h1>
       { hasDrinks ? (
         <>
-          <p>Si hay bebidas</p>  
+          {drinks.drinks.map((drink) => (
+              <DrinkCard
+                key={drink.idDrink}
+                drink={drink}
+              />
+          ))}
         </>
       ) : (
         <p className="my-10 text-center text-2xl ">
