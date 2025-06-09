@@ -1,5 +1,5 @@
 import type { Drink } from "../types"
-
+// este archivo es el componente que se encarga de mostrar una bebida individual
 type DrinkCardProps = {
     drink: Drink
 }
