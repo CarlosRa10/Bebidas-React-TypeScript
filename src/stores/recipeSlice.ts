@@ -1,6 +1,6 @@
 import type { StateCreator } from "zustand"
 import { getCategories, getRecipes } from "../services/RecipeService"
-import type { Categories, Drinks, SearchFilter } from "../types"
+import type { Categories, Drink, Drinks, SearchFilter } from "../types"
 
 
 //state arribas y acciones abajo
@@ -8,7 +8,8 @@ export type RecipeSliceType = {
     categories: Categories,
     drinks: Drinks,
     fetchCategories: () => Promise<void>,
-    searchRecipes: (searchFilters: SearchFilter ) => Promise<void>
+    searchRecipes: (searchFilters: SearchFilter ) => Promise<void>,
+    selectRecipe:(id:Drink['idDrink']) => Promise<void>//va a tomar un id de tipo Drink['idDrink'] 
 
 }
 
@@ -40,6 +41,13 @@ export const createRecipeSlice : StateCreator<RecipeSliceType> = (set) => ({
         set({
             drinks
         })
+    },
+    selectRecipe: async (id) => {
+        // Aquí iría la lógica para seleccionar una receta específica
+        // Por ejemplo, podrías hacer una llamada a un servicio que obtenga los detalles de una receta
+        // y luego actualizar el estado con los detalles de la receta seleccionada.
+        //console.log("Seleccionando receta");
+        console.log(id)
     }
 
 })
