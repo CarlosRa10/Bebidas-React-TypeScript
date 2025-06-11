@@ -1,5 +1,5 @@
 import type { StateCreator } from "zustand"
-import { getCategories, getRecipes } from "../services/RecipeService"
+import { getCategories, getRecipeById, getRecipes } from "../services/RecipeService"
 import type { Categories, Drink, Drinks, SearchFilter } from "../types"
 
 
@@ -47,7 +47,9 @@ export const createRecipeSlice : StateCreator<RecipeSliceType> = (set) => ({
         // Por ejemplo, podrías hacer una llamada a un servicio que obtenga los detalles de una receta
         // y luego actualizar el estado con los detalles de la receta seleccionada.
         //console.log("Seleccionando receta");
-        console.log(id)
+        //console.log(id)
+        const selectRecipe = await getRecipeById(id)
+        console.log(selectRecipe)
     }
 
 })
