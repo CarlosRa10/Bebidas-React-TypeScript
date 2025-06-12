@@ -1,12 +1,13 @@
 import type { StateCreator } from "zustand"
 import { getCategories, getRecipeById, getRecipes } from "../services/RecipeService"
-import type { Categories, Drink, Drinks, SearchFilter } from "../types"
+import type { Categories, Drink, Drinks, Recipe, SearchFilter } from "../types"
 
 
 //state arribas y acciones abajo
 export type RecipeSliceType = {
     categories: Categories,
     drinks: Drinks,
+    selectedRecipe: Recipe
     fetchCategories: () => Promise<void>,
     searchRecipes: (searchFilters: SearchFilter ) => Promise<void>,
     selectRecipe:(id:Drink['idDrink']) => Promise<void>//va a tomar un id de tipo Drink['idDrink'] 
@@ -24,6 +25,7 @@ export const createRecipeSlice : StateCreator<RecipeSliceType> = (set) => ({
     drinks:{
         drinks: []
     },
+    selectedRecipe: {} as Recipe, // Inicialmente vacío, se llenará al seleccionar una receta - as Recipe le dice a TypeScript que este objeto será del tipo Recipe
     fetchCategories: async() => {
         const categories = await getCategories()
         //console.log(categories)
@@ -48,8 +50,11 @@ export const createRecipeSlice : StateCreator<RecipeSliceType> = (set) => ({
         // y luego actualizar el estado con los detalles de la receta seleccionada.
         //console.log("Seleccionando receta");
         //console.log(id)
-        const selectRecipe = await getRecipeById(id)
-        console.log(selectRecipe)
+        const selectedRecipe = await getRecipeById(id)
+        //console.log(selectRecipe)
+        set({
+            selectedRecipe
+        })
     }
 
 })
