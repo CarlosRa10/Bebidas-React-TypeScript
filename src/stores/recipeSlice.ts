@@ -7,11 +7,12 @@ import type { Categories, Drink, Drinks, Recipe, SearchFilter } from "../types"
 export type RecipeSliceType = {
     categories: Categories,
     drinks: Drinks,
-    selectedRecipe: Recipe
+    selectedRecipe: Recipe,
+    modal: boolean, // Para controlar la visibilidad del modal
     fetchCategories: () => Promise<void>,
     searchRecipes: (searchFilters: SearchFilter ) => Promise<void>,
     selectRecipe:(id:Drink['idDrink']) => Promise<void>//va a tomar un id de tipo Drink['idDrink'] 
-
+    closeModal: () => void // Acción para cerrar el modal - no toma parámetros
 }
 
 //StateCreator<RecipeSliceType>
@@ -26,6 +27,7 @@ export const createRecipeSlice : StateCreator<RecipeSliceType> = (set) => ({
         drinks: []
     },
     selectedRecipe: {} as Recipe, // Inicialmente vacío, se llenará al seleccionar una receta - as Recipe le dice a TypeScript que este objeto será del tipo Recipe
+    modal: false, // Inicialmente el modal está cerrado
     fetchCategories: async() => {
         const categories = await getCategories()
         //console.log(categories)
@@ -53,7 +55,15 @@ export const createRecipeSlice : StateCreator<RecipeSliceType> = (set) => ({
         const selectedRecipe = await getRecipeById(id)
         //console.log(selectRecipe)
         set({
-            selectedRecipe
+            selectedRecipe,
+            modal: true // Abrimos el modal al seleccionar una receta
+        })
+    },
+    closeModal: () => {
+        // Acción para cerrar el modal
+        set({
+            modal: false,
+            selectedRecipe: {} as Recipe // Limpiamos la receta seleccionada al cerrar el modal
         })
     }
 
