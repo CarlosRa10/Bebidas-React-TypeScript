@@ -1,5 +1,5 @@
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
-import { Fragment } from 'react';
+import { Fragment, type JSX } from 'react';
 import { useAppStore } from '../stores/useAppStore';
 
 export default function Modal() {
@@ -8,6 +8,7 @@ export default function Modal() {
     const closeModal = useAppStore((state) => state.closeModal); // Accedemos a la función para cerrar el modal desde el store
     const selectedRecipe = useAppStore((state) => state.selectedRecipe);
     const renderIngredients = () => {
+      const ingredients : JSX.Element[] = []
       return <p>Desde RenderIngredients</p>
     } 
   return (
