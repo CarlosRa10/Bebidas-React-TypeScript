@@ -6,7 +6,10 @@ export default function Modal() {
 
     const modal = useAppStore((state) => state.modal); // Accedemos al estado del modal desde el store
     const closeModal = useAppStore((state) => state.closeModal); // Accedemos a la función para cerrar el modal desde el store
-    const selectedRecipe = useAppStore((state) => state.selectedRecipe); 
+    const selectedRecipe = useAppStore((state) => state.selectedRecipe);
+    const renderIngredients = () => {
+      return <p>Desde RenderIngredients</p>
+    } 
   return (
     <>
       <Transition appear show={modal} as={Fragment}>
@@ -46,6 +49,7 @@ export default function Modal() {
                   <DialogTitle as="h3" className="text-gray-900 text-2xl font-extrabold my-5">
                     Ingredientes y Cantidades
                   </DialogTitle>
+                  {renderIngredients()}
                   <DialogTitle as="h3" className="text-gray-900 text-2xl font-extrabold my-5">
                     Instrucciones
                   </DialogTitle>
