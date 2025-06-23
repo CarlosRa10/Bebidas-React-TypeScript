@@ -1,16 +1,32 @@
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
 import { Fragment, type JSX } from 'react';
 import { useAppStore } from '../stores/useAppStore';
+import type { Recipe } from '../types';
 
 export default function Modal() {
 
     const modal = useAppStore((state) => state.modal); // Accedemos al estado del modal desde el store
     const closeModal = useAppStore((state) => state.closeModal); // Accedemos a la función para cerrar el modal desde el store
     const selectedRecipe = useAppStore((state) => state.selectedRecipe);
+
     const renderIngredients = () => {
       const ingredients : JSX.Element[] = []
-      return <p>Desde RenderIngredients</p>
+      for(let i = 1; i <=15; i++) {
+        const ingredient = selectedRecipe[`strIngredient${i}` as keyof Recipe];
+        const measure = selectedRecipe[`strMeasure${i}` as keyof Recipe];
+        if(ingredient && measure){
+//No es usual usar push en react porque muta el array original, pero en este caso lo usamos para construir un array de JSX.Element
+//es solo un arreglo que se esta llenando de información y no se va a renderizar directamente
+          ingredients.push(
+            <li key={i} className='text-lg font-normal'>
+              {ingredient} - {measure}
+            </li>
+          )
+        }
+      }
+      return ingredients
     } 
+    
   return (
     <>
       <Transition appear show={modal} as={Fragment}>
