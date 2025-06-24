@@ -60,11 +60,10 @@ export const createRecipeSlice : StateCreator<RecipeSliceType> = (set) => ({
         })
     },
     closeModal: () => {
-        // Acción para cerrar el modal
-        set({
-            modal: false,
-            selectedRecipe: {} as Recipe // Limpiamos la receta seleccionada al cerrar el modal
-        })
+        set({ modal: false })
+        setTimeout(() => {
+        set({ selectedRecipe: {} as Recipe })
+        }, 300);
     }
 
 })

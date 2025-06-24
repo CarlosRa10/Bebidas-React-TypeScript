@@ -82,7 +82,7 @@ export default function Modal() {
                     <button
                       type='button'
                       className='w-full bg-orange-600 rounded p-3 font-bold text-white uppercase shadow hover:bg-orange-500'
-                      onClick={()} 
+                      //onClick={()} 
                     >agregar a favoritos</button>
                   </div>
                 </DialogPanel>
