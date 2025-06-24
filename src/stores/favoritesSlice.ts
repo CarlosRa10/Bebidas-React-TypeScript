@@ -3,11 +3,25 @@ import type { Recipe } from '../types'
 
 export type FavoritesSliceType = {
     favorites: Recipe[],
+    handleClickFavorite: (recipe:Recipe) => void, // Acción para manejar el clic en el botón de favorito
 }
 
 //Su tipo es StateCreator<FavoritesSliceType> significa que es una función que crea un estado compatible con Zustand y sigue la estructura de FavoritesSliceType.
-export const createFavoritesSlice: StateCreator<FavoritesSliceType> = () => ({
+export const createFavoritesSlice: StateCreator<FavoritesSliceType> = (set,get) => ({
     favorites: [],
+    handleClickFavorite: (recipe) => {
+        //console.log("Agregando receta a favoritos:", recipe);
+// get().favorites - es la sintaxis para acceder al estado actual de las acciones de este mismo slice  
+        //console.log("Recetas favoritas actuales:", get().favorites);
+        if(get().favorites.some(favorite => favorite.idDrink === recipe.idDrink)){
+            console.log('Si existe...')
+        }else{
+            console.log('No existe...')
+            set({
+                favorites: [...get().favorites, recipe] // Agrega la receta a favoritos si no existe
+            })
+        }
+    }
 })
 
 //Slice Pattern es un patrón de diseño que se utiliza en Zustand para organizar el estado de la aplicación en "slices" o "rebanadas", cada una con su propia lógica y estado. Esto permite una mejor modularidad y reutilización del código, facilitando la gestión del estado en aplicaciones más grandes y complejas.
