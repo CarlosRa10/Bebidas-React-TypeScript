@@ -14,12 +14,16 @@ export const createFavoritesSlice: StateCreator<FavoritesSliceType> = (set,get) 
 // get().favorites - es la sintaxis para acceder al estado actual de las acciones de este mismo slice  
         //console.log("Recetas favoritas actuales:", get().favorites);
         if(get().favorites.some(favorite => favorite.idDrink === recipe.idDrink)){
-            console.log('Si existe...')
+            //console.log('Si existe...')
+            set((state) => ({
+                //vamos a traernos todos los favoritos que sean diferentes a la receta que estamos pasando como argumento
+                favorites: state.favorites.filter(favorite => favorite.idDrink !== recipe.idDrink) // Elimina la receta de favoritos si ya existe
+            }))
         }else{
-            console.log('No existe...')
-            set({
-                favorites: [...get().favorites, recipe] // Agrega la receta a favoritos si no existe
-            })
+            //console.log('No existe...')
+            set((state)=>({
+                favorites: [...state.favorites, recipe] // Agrega la receta a favoritos si no existe
+            }))
         }
     }
 })
