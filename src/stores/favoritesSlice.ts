@@ -1,6 +1,7 @@
 import type { StateCreator} from 'zustand'
 import type { Recipe } from '../types'
 
+// Los types
 export type FavoritesSliceType = {
     favorites: Recipe[],
     handleClickFavorite: (recipe:Recipe) => void, // Acción para manejar el clic en el botón de favorito
