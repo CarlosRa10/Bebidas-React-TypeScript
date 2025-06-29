@@ -11,6 +11,9 @@ export type FavoritesSliceType = {
 }
 
 //Su tipo es StateCreator<FavoritesSliceType> significa que es una función que crea un estado compatible con Zustand y sigue la estructura de FavoritesSliceType.
+//FavoritesSliceType & RecipeSliceType:Indica que este slice puede acceder no solo a su propio estado (FavoritesSliceType), sino también al estado de RecipeSliceType.
+//Esto es necesario porque más adelante se llama a createRecipeSlice(...).closeModal(), que pertenece a otro slice.
+//FavoritesSliceType (último parámetro): Define el tipo del objeto que retorna esta función (el slice actual).
 export const createFavoritesSlice: StateCreator<FavoritesSliceType & RecipeSliceType,[],[],FavoritesSliceType> = (set,get,api) => ({
     favorites: [],
     handleClickFavorite: (recipe) => {
