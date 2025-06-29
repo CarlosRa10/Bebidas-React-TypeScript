@@ -10,3 +10,5 @@ export const useAppStore = create<RecipeSliceType & FavoritesSliceType>()(devtoo
     ...createRecipeSlice(...a),
     ...createFavoritesSlice(...a)
 })))
+
+export const { getState } = useAppStore; //esto exporta todo el estado global

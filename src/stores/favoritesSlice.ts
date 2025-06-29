@@ -1,5 +1,7 @@
 import type { StateCreator} from 'zustand'
 import type { Recipe } from '../types'
+import { createRecipeSlice, type RecipeSliceType } from './recipeSlice'
+//import { getState } from "./useAppStore";
 
 // Los types
 export type FavoritesSliceType = {
@@ -9,7 +11,7 @@ export type FavoritesSliceType = {
 }
 
 //Su tipo es StateCreator<FavoritesSliceType> significa que es una función que crea un estado compatible con Zustand y sigue la estructura de FavoritesSliceType.
-export const createFavoritesSlice: StateCreator<FavoritesSliceType> = (set,get) => ({
+export const createFavoritesSlice: StateCreator<FavoritesSliceType & RecipeSliceType,[],[],FavoritesSliceType> = (set,get,api) => ({
     favorites: [],
     handleClickFavorite: (recipe) => {
         //console.log("Agregando receta a favoritos:", recipe);
@@ -27,6 +29,8 @@ export const createFavoritesSlice: StateCreator<FavoritesSliceType> = (set,get) 
                 favorites: [...state.favorites, recipe] // Agrega la receta a favoritos si no existe
             }))
         }
+        createRecipeSlice(set,get,api).closeModal()
+        //getState().closeModal(); //Aqui se "consume" el estado y se usa el closeModal - codigo para evitar createRecipeSlice
     },
     favoriteExists: (id)=>{
         return get().favorites.some(favorite => favorite.idDrink === id) // Verifica si la receta ya está en favoritos
