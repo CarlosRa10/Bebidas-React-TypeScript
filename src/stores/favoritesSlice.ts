@@ -1,7 +1,7 @@
 import type { StateCreator} from 'zustand'
 import type { Recipe } from '../types'
 import { createRecipeSlice, type RecipeSliceType } from './recipeSlice'
-//import { getState } from "./useAppStore";
+//import { getState } from "./useAppStore";//metodo para estados globales
 
 // Los types
 export type FavoritesSliceType = {
