@@ -8,6 +8,7 @@ export type FavoritesSliceType = {
     favorites: Recipe[],
     handleClickFavorite: (recipe:Recipe) => void, // Acción para manejar el clic en el botón de favorito
     favoriteExists: (id: Recipe['idDrink']) => boolean // Verifica si una receta ya está en favoritos
+    loadFromStorage: () => void
 }
 
 //Su tipo es StateCreator<FavoritesSliceType> significa que es una función que crea un estado compatible con Zustand y sigue la estructura de FavoritesSliceType.
@@ -34,9 +35,25 @@ export const createFavoritesSlice: StateCreator<FavoritesSliceType & RecipeSlice
         }
         createRecipeSlice(set,get,api).closeModal()
         //getState().closeModal(); //Aqui se "consume" el estado y se usa el closeModal - codigo para evitar createRecipeSlice
+        localStorage.setItem('favorites', JSON.stringify(get().favorites))
+        //Este código guarda en el localStorage del navegador los datos de favoritos almacenados en el estado de la aplicación
+        //get() es una función de un estado global (zustand)
+        //.favorites accede a la propiedad favorites dentro de ese estado
+        //JSON.stringify(...)Guarda la cadena JSON en el localStorage bajo la clave 'favorites'.incluso después de recargar la página.
+
     },
     favoriteExists: (id)=>{
         return get().favorites.some(favorite => favorite.idDrink === id) // Verifica si la receta ya está en favoritos
+    },
+    loadFromStorage:()=>{
+        const storedFavorites = localStorage.getItem('favorites')//localStorage.getItem('favorites') busca en el almacenamiento del navegador un dato guardado bajo la clave 'favorites'.
+        //Si existe, devuelve un string en formato JSON - Comprueba si storedFavorites no es null ni undefined
+        if(storedFavorites){{
+            //actualiza el estado de Zustand, asignando el array parseado a la propiedad favorites.
+            set({
+                favorites: JSON.parse(storedFavorites)//JSON.parse(storedFavorites) convierte el string JSON guardado en un array u objeto de JavaScript
+            })
+        }}
     }
 })
 
