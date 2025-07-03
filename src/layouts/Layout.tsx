@@ -10,6 +10,7 @@ export default function Layout() {
   //en este caso es el header y el main
   //el main es el contenedor de las rutas hijas
   const  loadFromStorage = useAppStore((state)=>state.loadFromStorage)
+  //const  notification = useAppStore((state)=>state.notification)
   useEffect(()=>{
     loadFromStorage()
   },[])
