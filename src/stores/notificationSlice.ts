@@ -1,5 +1,6 @@
 import type { StateCreator} from 'zustand'
 
+//types 
 type Notification = {
     text: string
     error: boolean
