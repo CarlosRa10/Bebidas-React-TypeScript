@@ -25,7 +25,8 @@ export default function Header() {
     
     
     const searchRecipes = useAppStore((state)=> state.searchRecipes)
-
+    
+    const showNotification = useAppStore((state)=> state.showNotification)
     
     useEffect(() => {
         fetchCategories()
@@ -46,12 +47,15 @@ export default function Header() {
         })
     }
 
-//TODO: Validar que los campos no estén vacíos antes de enviar el formulario
+
     const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
         e.preventDefault() //Evita que se recargue la página al enviar el formulario
         //verifica si alguno de los valores en el objeto searchFilters es una cadena vacía ('').
         if(Object.values(searchFilters).includes('')) {
-            console.log('Todos los campos son obligatorios')
+            showNotification({
+                text:'Todos los campos son obligatorios',
+                error:true
+            })
             return
         }
         //Consultar las recetas
