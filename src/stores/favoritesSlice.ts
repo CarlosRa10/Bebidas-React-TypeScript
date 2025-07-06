@@ -1,6 +1,7 @@
 import type { StateCreator} from 'zustand'
 import type { Recipe } from '../types'
 import { createRecipeSlice, type RecipeSliceType } from './recipeSlice'
+import { createNotificationSlice, type NotificationSliceType } from './notificationSlice'
 //import { getState } from "./useAppStore";//metodo para estados globales
 
 // Los types
@@ -15,7 +16,7 @@ export type FavoritesSliceType = {
 //FavoritesSliceType & RecipeSliceType:Indica que este slice puede acceder no solo a su propio estado (FavoritesSliceType), sino también al estado de RecipeSliceType.
 //Esto es necesario porque más adelante se llama a createRecipeSlice(...).closeModal(), que pertenece a otro slice.
 //FavoritesSliceType (último parámetro): Define el tipo del objeto que retorna esta función (el slice actual).
-export const createFavoritesSlice: StateCreator<FavoritesSliceType & RecipeSliceType,[],[],FavoritesSliceType> = (set,get,api) => ({
+export const createFavoritesSlice: StateCreator<FavoritesSliceType & RecipeSliceType & NotificationSliceType,[],[],FavoritesSliceType> = (set,get,api) => ({
     favorites: [],
     handleClickFavorite: (recipe) => {
         //console.log("Agregando receta a favoritos:", recipe);
@@ -27,11 +28,19 @@ export const createFavoritesSlice: StateCreator<FavoritesSliceType & RecipeSlice
                 //vamos a traernos todos los favoritos que sean diferentes a la receta que estamos pasando como argumento
                 favorites: state.favorites.filter(favorite => favorite.idDrink !== recipe.idDrink) // Elimina la receta de favoritos si ya existe
             }))
+            createNotificationSlice(set,get,api).showNotification({
+                text:'Se eliminó de favoritos',
+                error:false
+            })
         }else{
             //console.log('No existe...')
             set((state)=>({
                 favorites: [...state.favorites, recipe] // Agrega la receta a favoritos si no existe
             }))
+            createNotificationSlice(set,get,api).showNotification({
+                text:'Se agregó a favoritos',
+                error:false
+            })
         }
         createRecipeSlice(set,get,api).closeModal()
         //getState().closeModal(); //Aqui se "consume" el estado y se usa el closeModal - codigo para evitar createRecipeSlice
