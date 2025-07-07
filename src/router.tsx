@@ -5,7 +5,7 @@ import Layout from './layouts/Layout'
 const IndexPage = lazy(()=> import('./views/IndexPage'))
 const FavoritesPage = lazy(()=> import('./views/FavoritesPage'))
 
-//Suspense tiene un prop que se llama fallback
+//Suspense tiene una Propiedad(prop) que se llama fallback
 
 // aqui es donde se definen las rutas de la aplicacion
 export default function AppRouter() {
