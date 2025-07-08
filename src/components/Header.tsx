@@ -30,6 +30,7 @@ export default function Header() {
     
     useEffect(() => {
         fetchCategories()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 //[] → "No vigiles nada, dispara el efecto solo al inicio"
 //[id] → "Vigila id, si cambia, dispara el efecto"
