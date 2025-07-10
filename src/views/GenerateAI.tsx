@@ -3,11 +3,12 @@ import { useAppStore } from "../stores/useAppStore";
 export default function GenerateAI() {
 
   const showNotification = useAppStore(state => state.showNotification);// 3 paso importar la función showNotification del store
-  
+  const generateRecipe = useAppStore(state => state.generateRecipe);// 4 paso importar la función generateRecipe del store
+
   //1 paso hacer una prueba del submit del formulario
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement> ) => {
     e.preventDefault();
-    console.log('Desde el submit del formulario');
+    //console.log('Desde el submit del formulario');
     //2 paso validar que el input no este vacio
     const form = new FormData(e.currentTarget);//va a generar el objeto FormData en base al submit del formulario
     const prompt = form.get('prompt') as string; // decimos que el prompt es un string
@@ -18,6 +19,7 @@ export default function GenerateAI() {
       })
       return;//3 paso si el input esta vacio mostrar un mensaje de error y no seguir con el código
     }
+    await generateRecipe(prompt);//4 paso llamar a la función generateRecipe con el prompt
   }
   
   return (
