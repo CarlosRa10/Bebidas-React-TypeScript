@@ -1,6 +1,24 @@
+import { useAppStore } from "../stores/useAppStore";
 
 export default function GenerateAI() {
+
+  const showNotification = useAppStore(state => state.showNotification);// 3 paso importar la función showNotification del store
   
+  //1 paso hacer una prueba del submit del formulario
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement> ) => {
+    e.preventDefault();
+    console.log('Desde el submit del formulario');
+    //2 paso validar que el input no este vacio
+    const form = new FormData(e.currentTarget);//va a generar el objeto FormData en base al submit del formulario
+    const prompt = form.get('prompt') as string; // decimos que el prompt es un string
+    if (prompt.trim()=== '') {
+      showNotification({
+        text:'El búsqueda no puede estar vacio',
+        error:true
+      })
+      return;//3 paso si el input esta vacio mostrar un mensaje de error y no seguir con el código
+    }
+  }
   
   return (
     <>
@@ -8,7 +26,7 @@ export default function GenerateAI() {
 
       <div className="max-w-4xl mx-auto">
         <form  
-          onSubmit={() => {}}
+          onSubmit={handleSubmit}
           className='flex flex-col space-y-3 py-10'
         >
           <div className="relative">
