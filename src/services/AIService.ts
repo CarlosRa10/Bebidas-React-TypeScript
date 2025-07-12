@@ -9,10 +9,14 @@ export default {
         // Aquí se llamaría al servicio de AI para generar la receta
         const result = streamText({
             // Aquí se configura el modelo de AI que se va a utilizar - objeto de configuración
-            model: openrouter(''), // modelo de AI que se va a utilizar
-            apiKey: import.meta.env.VITE_OPENROUTER_KEY, //llamar a la variable de entorno
-            prompt, // el prompt que se le pasa a la IA
-            stream: true, // habilita el streaming de la respuesta
+            // modelo de AI que se va a utilizar
+            model: openrouter('meta-llama/llama-3.3-70b-instruct:free'),
+            prompt, // prompt es algo que espera streamText, es el texto que le vamos a pasar - prompt:prompt si se llaman igual solo prompt
         })  
+        //console.log(result);
+        return result.textStream
     }
 }
+
+//npm view @openrouter/ai-sdk-provider versions --json - para ver las versiones disponibles
+//npm install @openrouter/ai-sdk-provider@0.7.2 // version estable
