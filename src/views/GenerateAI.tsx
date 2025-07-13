@@ -5,6 +5,7 @@ export default function GenerateAI() {
   const showNotification = useAppStore(state => state.showNotification);// 3 paso importar la función showNotification del store
   const generateRecipe = useAppStore(state => state.generateRecipe);// 4 paso importar la función generateRecipe del store
   const recipe = useAppStore(state => state.recipe); // 5 paso importar la receta generada del store
+  const isGenerating = useAppStore(state => state.isGenerating);// 6 paso importar el estado de isGenerating del store
 
   //1 paso hacer una prueba del submit del formulario
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement> ) => {
@@ -42,7 +43,8 @@ export default function GenerateAI() {
             <button 
               type="submit" 
               aria-label="Enviar"
-              className={`cursor-pointer absolute top-1/2 right-5 transform -translate-x-1/2 -translate-y-1/2`}
+              className={`cursor-pointer absolute top-1/2 right-5 transform -translate-x-1/2 -translate-y-1/2 ${isGenerating ? 'opacity-50 cursor-not-allowed' : ''}`}//desabilitar el botón si isGenerating es true de manera visual
+              disabled={isGenerating} // deshabilitar el botón si isGenerating es true
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
                 stroke="currentColor" className="w-10 h-10">
@@ -52,7 +54,7 @@ export default function GenerateAI() {
             </button>
           </div>
         </form>
-
+        {isGenerating && <p className="text-center animate-blink ">Generando...</p> }
         <div className="py-10 whitespace-pre-wrap">
           {recipe}
         </div>

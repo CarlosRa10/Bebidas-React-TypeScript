@@ -15,6 +15,8 @@ export default {
             // model: openrouter('deepseek/deepseek-chat-v3-0324:free'),
             // model: openrouter('google/gemma-3-4b-it:free'),
             prompt, // prompt es algo que espera streamText, es el texto que le vamos a pasar - prompt:prompt si se llaman igual solo prompt
+            system: 'Eres un experto en recetas de cocina y bebidas. Genera una receta completa con ingredientes, instrucciones y consejos de presentación. agrega algo de comedia', // mensaje del sistema que le dice a la IA que es lo que tiene que hacer
+            temperature: 0.7, // controla la creatividad de la respuesta, entre 0 y 1
         })  
         console.log(result);
         return result.textStream
