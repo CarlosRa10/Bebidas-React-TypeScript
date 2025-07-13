@@ -4,6 +4,7 @@ export default function GenerateAI() {
 
   const showNotification = useAppStore(state => state.showNotification);// 3 paso importar la función showNotification del store
   const generateRecipe = useAppStore(state => state.generateRecipe);// 4 paso importar la función generateRecipe del store
+  const recipe = useAppStore(state => state.recipe); // 5 paso importar la receta generada del store
 
   //1 paso hacer una prueba del submit del formulario
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement> ) => {
@@ -53,7 +54,7 @@ export default function GenerateAI() {
         </form>
 
         <div className="py-10 whitespace-pre-wrap">
-
+          {recipe}
         </div>
       </div>
 
